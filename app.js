@@ -44,6 +44,12 @@ app.post("/webhook", (req, res) => {
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let type = req.body.entry[0].changes[0].value.messages[0].type;
       if (type === "interactive") {
+        let service = req.body.entry[0].changes[0].value.messages[0].interactive.list_reply.title; // extract the selected service
+        if(service === "row-title-content"){
+          
+        }
+        console.log(service)
+        
       } else {
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
         axios({
