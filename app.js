@@ -51,8 +51,9 @@ app.post("/webhook", (req, res) => {
           "/messages?access_token=" +
           token,
         data: {
-          messaging_product: "whatsapp",
+          "recipient_type": "individual",
           to: from,
+          type: "interactive",
           text: { body: "Ack: " + msg_body },
         },
         headers: { "Content-Type": "application/json" },
