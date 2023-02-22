@@ -42,75 +42,65 @@ app.post("/webhook", (req, res) => {
       let phone_number_id =
         req.body.entry[0].changes[0].value.metadata.phone_number_id;
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
-      if()
-      let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
-      axios({
-        method: "POST", // Required, HTTP method, a string, e.g. POST, GET
-        url:
-          "https://graph.facebook.com/v12.0/" +
-          phone_number_id +
-          "/messages?access_token=" +
-          token,
-        data: {
-          recipient_type: "individual",
-          messaging_product: "whatsapp",
-          type: "interactive",
-          to: from,
-          // text: { body: "Ack: " + msg_body },
-          interactive: {
-            type: "list",
-            header: {
-              type: "text",
-              text: "your-header-content",
-            },
-            body: {
-              text: "your-text-message-content",
-            },
-            footer: {
-              text: "your-footer-content",
-            },
-            action: {
-              button: "cta-button-content",
-              sections: [
-                {
-                  title: "section-title",
-                  rows: [
-                    {
-                      id: "unique-row-identifier",
-                      title: "row-title-content",
-                      description: "row-description-content",
-                    },
-                  ],
-                },
-                {
-                  title: "section-title",
-                  rows: [
-                    {
-                      id: "unique-row-identifier",
-                      title: "row-title-content",
-                      description: "row-description-content",
-                    },
-                  ],
-                },
-              ],
+      let type = req.body.entry[0].changes[0].value.messages[0].type;
+      if (type === "interactive") {
+      } else {
+        let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
+        axios({
+          method: "POST", // Required, HTTP method, a string, e.g. POST, GET
+          url:
+            "https://graph.facebook.com/v12.0/" +
+            phone_number_id +
+            "/messages?access_token=" +
+            token,
+          data: {
+            recipient_type: "individual",
+            messaging_product: "whatsapp",
+            type: "interactive",
+            to: from,
+            // text: { body: "Ack: " + msg_body },
+            interactive: {
+              type: "list",
+              header: {
+                type: "text",
+                text: "your-header-content",
+              },
+              body: {
+                text: "your-text-message-content",
+              },
+              footer: {
+                text: "your-footer-content",
+              },
+              action: {
+                button: "cta-button-content",
+                sections: [
+                  {
+                    title: "section-title",
+                    rows: [
+                      {
+                        id: "unique-row-identifier",
+                        title: "row-title-content",
+                        description: "row-description-content",
+                      },
+                    ],
+                  },
+                  {
+                    title: "section-title",
+                    rows: [
+                      {
+                        id: "unique-row-identifier",
+                        title: "row-title-content",
+                        description: "row-description-content",
+                      },
+                    ],
+                  },
+                ],
+              },
             },
           },
-        },
-        headers: { "Content-Type": "application/json" },
-      }).catch((error)=>{
-            if (error.response) {
-      // Request made and server responded
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-      });
+          headers: { "Content-Type": "application/json" },
+        });
+      }
     }
     res.sendStatus(200);
   } else {
