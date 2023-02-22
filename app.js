@@ -52,7 +52,7 @@ app.post("/webhook", (req, res) => {
           token,
         data: {
           recipient_type: "individual",
-          // messaging_product: "whatsapp",
+          messaging_product: "whatsapp",
           type: "interactive",
           to: from,
           // text: { body: "Ack: " + msg_body },
@@ -72,7 +72,7 @@ app.post("/webhook", (req, res) => {
               button: "cta-button-content",
               sections: [
                 {
-                  title: "your-section-title-content",
+                  title: "section-title",
                   rows: [
                     {
                       id: "unique-row-identifier",
@@ -82,7 +82,7 @@ app.post("/webhook", (req, res) => {
                   ],
                 },
                 {
-                  title: "your-section-title-content",
+                  title: "section-title",
                   rows: [
                     {
                       id: "unique-row-identifier",
@@ -96,6 +96,19 @@ app.post("/webhook", (req, res) => {
           },
         },
         headers: { "Content-Type": "application/json" },
+      }).catch((error)=>{
+            if (error.response) {
+      // Request made and server responded
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
       });
     }
     res.sendStatus(200);
