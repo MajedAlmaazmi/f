@@ -51,10 +51,47 @@ app.post("/webhook", (req, res) => {
           "/messages?access_token=" +
           token,
         data: {
-          "recipient_type": "individual",
+          recipient_type: "individual",
           to: from,
           type: "interactive",
-          text: { body: "Ack: " + msg_body },
+          interactive: {
+            type: "list",
+            header: {
+              type: "text",
+              text: "your-header-content",
+            },
+            body: {
+              text: "your-text-message-content",
+            },
+            footer: {
+              text: "your-footer-content",
+            },
+            action: {
+              button: "cta-button-content",
+              sections: [
+                {
+                  title: "your-section-title-content",
+                  rows: [
+                    {
+                      id: "unique-row-identifier",
+                      title: "row-title-content",
+                      description: "row-description-content",
+                    },
+                  ],
+                },
+                {
+                  title: "your-section-title-content",
+                  rows: [
+                    {
+                      id: "unique-row-identifier",
+                      title: "row-title-content",
+                      description: "row-description-content",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
         },
         headers: { "Content-Type": "application/json" },
       });
@@ -67,12 +104,12 @@ app.post("/webhook", (req, res) => {
 });
 
 // Accepts GET requests at the /webhook endpoint. You need this URL to setup webhook initially.
-// info on verification request payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests 
+// info on verification request payload: https://developers.facebook.com/docs/graph-api/webhooks/getting-started#verification-requests
 app.get("/webhook", (req, res) => {
   /**
    * UPDATE YOUR VERIFY TOKEN
    *This will be the Verify Token value when you set up webhook
-  **/
+   **/
   const verify_token = process.env.VERIFY_TOKEN;
 
   // Parse params from the webhook verification request
