@@ -44,12 +44,51 @@ app.post("/webhook", (req, res) => {
       let from = req.body.entry[0].changes[0].value.messages[0].from; // extract the phone number from the webhook payload
       let type = req.body.entry[0].changes[0].value.messages[0].type;
       if (type === "interactive") {
-        let service = req.body.entry[0].changes[0].value.messages[0].interactive.list_reply.title; // extract the selected service
-        if(service === "row-title-content"){
-          
+        let service =
+          req.body.entry[0].changes[0].value.messages[0].interactive.list_reply
+            .title; // extract the selected service
+        if (service === "row-title-content") {
+          // existingRequest
+          let existingRequest = true;
+          if (existingRequest) {
+            //       if (!existingRequest.startDate) {
+            // const startDate = new Date(Body);
+            // if (isNaN(startDate.getTime())) {
+            //   messagingResponse.message('Invalid start date. Please enter a valid date (YYYY-MM-DD).');
+            // } else {
+            //     await prisma.vacationRequest.update({
+            //       where: { id: existingRequest.id },
+            //       data: { startDate },
+            //     });
+            //     messagingResponse.message('Please enter the end date of your vacation (YYYY-MM-DD).');
+            //   }
+            // } else if (!existingRequest.endDate) {
+            //   const endDate = new Date(Body);
+            //   if (isNaN(endDate.getTime())) {
+            //     messagingResponse.message('Invalid end date. Please enter a valid date (YYYY-MM-DD).');
+            //   } else if (endDate < existingRequest.startDate) {
+            //     messagingResponse.message('End date cannot be before start date. Please enter a valid end date.');
+            //   } else {
+            //     await prisma.vacationRequest.update({
+            //       where: { id: existingRequest.id },
+            //       data: { endDate },
+            //     });
+            //     messagingResponse.message('Please enter the reason for your vacation.');
+            //   }
+            // } else {
+            //   await prisma.vacationRequest.update({
+            //     where: { id: existingRequest.id },
+            //     data: { reason: Body },
+            //   });
+            //   messagingResponse.message('Thank you for submitting your vacation request!');
+            // }
+          } else {
+            //             await prisma.vacationRequest.create({
+            //   data: { user: { connect: { id: user.id } } },
+            //       });
+            // messagingResponse.message('Please enter the start date of your vacation (YYYY-MM-DD).');
+          }
         }
-        console.log(service)
-        
       } else {
         let msg_body = req.body.entry[0].changes[0].value.messages[0].text.body; // extract the message text from the webhook payload
         axios({
